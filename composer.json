@@ -1,6 +1,6 @@
 {
 	"name": "offworks/schemy",
-	"description": "A generic db schema builder.",
+	"description": "A generic db schema based on doctrine/dbal with pragmatic interfaces",
 	"license": "MIT",
 	"keywords": ["schema", "builder", "php", "mysql"],
 	"authors": [{
@@ -11,10 +11,13 @@
 	"support": {
 		"issues": "https://github.com/offworks/schemy/issues"
 	},
-	"require": {
-		"symfony/yaml": "v3.2.0"
-	},
 	"autoload": {
         "psr-4": {"Schemy\\": "src"}
-    }
+    },
+	"require": {
+		"doctrine/dbal": "^2.10"
+	},
+	"require-dev": {
+		"doctrine/migrations": "^3.0"
+	}
 }

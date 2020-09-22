@@ -1,3 +1,5 @@
 local/*
 vendor/*
 .idea/*
+composer.lock
+src/Models/*
