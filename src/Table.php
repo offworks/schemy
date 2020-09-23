@@ -50,6 +50,16 @@ class Table extends \Doctrine\DBAL\Schema\Table
         return $this->addColumn($column, 'guid');
     }
 
+    public function primaryGuid($column)
+    {
+        $col = $this->addColumn($column, 'guid')
+            ->autoIncrement(true);
+
+        $this->primaryGuid([$column]);
+
+        return $col;
+    }
+
     public function increments($column)
     {
         $obj = $this->addColumn($column, 'integer')
