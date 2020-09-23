@@ -55,7 +55,7 @@ class Table extends \Doctrine\DBAL\Schema\Table
         $col = $this->addColumn($column, 'guid')
             ->autoIncrement(true);
 
-        $this->primaryGuid([$column]);
+        $this->setPrimaryKey([$column]);
 
         return $col;
     }
