@@ -15,9 +15,7 @@
         "psr-4": {"Schemy\\": "src"}
     },
 	"require": {
-		"doctrine/dbal": "^2.10"
-	},
-	"require-dev": {
+		"doctrine/dbal": "^2.10",
 		"doctrine/migrations": "^3.0"
 	}
 }
