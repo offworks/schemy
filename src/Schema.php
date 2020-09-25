@@ -9,11 +9,14 @@ class Schema extends \Doctrine\DBAL\Schema\Schema
      *
      * @param string $tableName
      *
+     * @param \Closure|null $tableFactory
      * @return Table
+     * @throws \Doctrine\DBAL\DBALException
+     * @throws \Doctrine\DBAL\Schema\SchemaException
      */
-    public function createTable($tableName)
+    public function createTable($tableName, callable $tableFactory = null)
     {
-        $table = new Table($tableName);
+        $table = $tableFactory ? $tableFactory() : new Table($tableName);
         $this->_addTable($table);
 
         foreach ($this->_schemaConfig->getDefaultTableOptions() as $name => $value) {

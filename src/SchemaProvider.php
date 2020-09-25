@@ -13,6 +13,9 @@ class SchemaProvider implements \Doctrine\Migrations\Provider\SchemaProvider
      */
     private $schema;
 
+    const OPTIONS_SCHEMA_FACTORY = 'schema_factory';
+    const OPTIONS_TABLE_FACTORY = 'table_factory';
+
     public function __construct(Schema $schema)
     {
         $this->schema = $schema;
@@ -20,13 +23,15 @@ class SchemaProvider implements \Doctrine\Migrations\Provider\SchemaProvider
 
     /**
      * @param HasStaticSchema[] $classes
+     * @param array $options
+     * @return SchemaProvider
      */
-    public static function fromStaticSchemas(array $classes)
+    public static function fromStaticSchemas(array $classes, array $options = [])
     {
-        $schema = new \Schemy\Schema();
+        $schema = isset($options[static::OPTIONS_SCHEMA_FACTORY]) ? $options[static::OPTIONS_SCHEMA_FACTORY]() : new \Schemy\Schema();
 
         foreach ($classes as $provider)
-            $provider::setUpSchema($schema->table($provider::getDbTableName()));
+            $provider::setUpSchema($schema->createTable($provider::getDbTableName(), isset($options[static::OPTIONS_TABLE_FACTORY]) ? $options[static::OPTIONS_TABLE_FACTORY] : null));
 
         return new static($schema);
     }
@@ -34,8 +39,11 @@ class SchemaProvider implements \Doctrine\Migrations\Provider\SchemaProvider
     /**
      * Directory scan
      * @param $dir
+     * @param array $options
+     * @return SchemaProvider
+     * @throws \ReflectionException
      */
-    public static function fromDirectory($dir)
+    public static function fromDirectory($dir, array $options = [])
     {
         $classes = [];
 
@@ -54,7 +62,7 @@ class SchemaProvider implements \Doctrine\Migrations\Provider\SchemaProvider
             $classes[] = $class;
         }
 
-        return static::fromStaticSchemas($classes);
+        return static::fromStaticSchemas($classes, $options);
     }
 
     protected static function getClassName($file)
