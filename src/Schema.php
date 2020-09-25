@@ -16,7 +16,7 @@ class Schema extends \Doctrine\DBAL\Schema\Schema
      */
     public function createTable($tableName, callable $tableFactory = null)
     {
-        $table = $tableFactory ? $tableFactory() : new Table($tableName);
+        $table = $tableFactory ? $tableFactory($tableName) : new Table($tableName);
         $this->_addTable($table);
 
         foreach ($this->_schemaConfig->getDefaultTableOptions() as $name => $value) {
