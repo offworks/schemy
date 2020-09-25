@@ -14,6 +14,11 @@ class Column extends \Doctrine\DBAL\Schema\Column
         return $this->setAutoincrement($bool);
     }
 
+    public function default($default)
+    {
+        return $this->setDefault($default);
+    }
+
     public function comment($comment)
     {
         return $this->setComment($comment);
